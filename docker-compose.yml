@@ -27,7 +27,7 @@ services:
       retries: 5
 
   schemas:
-    image: nginx:alpine
+    image: nginx:alpine@sha256:83075afea33660ca1911ce1905dee384079ed856397e0e5a9249435b22c35dc8
     container_name: cqrs-schemas
     volumes:
       - ./schemas:/usr/share/nginx/html:ro
@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
 
   data:
-    image: nginx:alpine
+    image: nginx:alpine@sha256:83075afea33660ca1911ce1905dee384079ed856397e0e5a9249435b22c35dc8
     container_name: cqrs-data
     volumes:
       - ./sample-data:/usr/share/nginx/html:ro

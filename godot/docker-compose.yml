@@ -28,7 +28,7 @@ services:
 
   # Temporal server for workflow orchestration
   temporal:
-    image: temporalio/auto-setup:latest
+    image: temporalio/auto-setup:latest@sha256:42ca35d05d9b6f3d84dc844af94cd4bda4adb23bee0cc1b4ddcafc0eea4f6afb
     container_name: temporal-server
     ports:
       - "${TEMPORAL_PORT:-7233}:7233"
@@ -45,7 +45,7 @@ services:
 
   # Temporal Web UI
   temporal-ui:
-    image: temporalio/ui:latest
+    image: temporalio/ui:latest@sha256:07937b24259e644e5e114c2b39490324f2297c80ce4960c0ddeda1d9f236e926
     container_name: temporal-ui
     ports:
       - "${TEMPORAL_UI_PORT:-8233}:8080"
@@ -58,7 +58,7 @@ services:
 
   # PostgreSQL for Temporal
   postgres:
-    image: postgres:13-alpine
+    image: postgres:13-alpine@sha256:18cfe3ef5e6815560c98237d6216d1e5119702fb0f3894c8785dd58b8bbe5d73
     container_name: temporal-postgres
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-temporal}
@@ -74,7 +74,7 @@ services:
 
   # Schema server + Auth proxy (Caddy)
   schema-server:
-    image: caddy:latest
+    image: caddy:latest@sha256:4ca8684fcc0eceb21b85b6546ba8a1ffa656a3033391bf8126d64e387b38f9fa
     container_name: schema-server
     volumes:
       - ./bundle.schema.json:/srv/bundle.schema.json
@@ -87,7 +87,7 @@ services:
 
   # Jaeger — OTel trace collector & UI
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:latest@sha256:62651dca8917ca1e7dc8f8b6cbc74cf7465c224b44dd2e45eb0e9c67e05526b1
     container_name: jaeger
     environment:
       - COLLECTOR_OTLP_ENABLED=true
@@ -149,7 +149,7 @@ services:
 
   # Prometheus for metrics collection
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:latest@sha256:f6639335d34a77d9d9db382b92eeb7fc00934be8eae81dbc03b31cfe90411a94
     container_name: bundle-prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -162,7 +162,7 @@ services:
 
   # Grafana for dashboards
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:latest@sha256:a0f881232a6fb71a0554a47d0fe2203b6888fe77f4cefb7ea62bed7eb54e13c3
     container_name: bundle-grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
@@ -179,7 +179,7 @@ services:
 
   # MinIO — S3-compatible artifact storage for generated apps
   minio:
-    image: minio/minio:latest
+    image: minio/minio:latest@sha256:f19713e2a8a3a4bc2b946383672313b837128689d6de3c2b9cf6aad9c8cabef4
     container_name: bundle-minio
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
