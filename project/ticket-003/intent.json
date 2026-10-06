@@ -1,0 +1,78 @@
+{
+  "schema": "new-project.intent/v3",
+  "ticket": "ticket-003",
+  "summary": "Run Codot API tests against exact candidate dependency requirements in CI",
+  "workstream": "governance",
+  "classification": {
+    "kind": "BUG",
+    "priority": "P1",
+    "origin": "requested"
+  },
+  "allowedPaths": [
+    ".github/workflows/api-tests.yml"
+  ],
+  "forbiddenPaths": [
+    ".env",
+    ".env.*",
+    "project/ticket-*/user-*.md"
+  ],
+  "stacks": [],
+  "dependsOn": [],
+  "conflictsWith": [],
+  "integrationTicket": null,
+  "delivery": {
+    "acceptedBaseSha": "a4b40feb4863148fe10324b062493cb64b15fd0e",
+    "targetBranch": "main",
+    "outcome": "Publish actual API unit tests on Python 3.10 and 3.12 for every PR and main push.",
+    "nonGoals": [
+      "Change API dependencies or application behavior",
+      "Admit a Validator profile or retire any existing check"
+    ],
+    "complexity": "S",
+    "estimatedMinutes": 45,
+    "budgets": {
+      "maxImplementationFiles": 2,
+      "maxAffectedComponents": 1,
+      "maxPublicInterfaceChanges": 0,
+      "maxRuntimeDependencies": 0
+    },
+    "architecture": {
+      "status": "accepted",
+      "decision": "Reuse existing API requirements and both existing test modules in an explicit read-only hosted CI workflow.",
+      "components": [
+        {
+          "name": "api-ci",
+          "paths": [
+            ".github/workflows/api-tests.yml"
+          ]
+        }
+      ],
+      "responsibilityChanges": false,
+      "interfaceChanges": [],
+      "dataChanges": [],
+      "ui": {
+        "impact": "none",
+        "states": [],
+        "evidence": []
+      },
+      "rollback": "Revert the workflow implementation commit."
+    },
+    "runtimeDependencies": [],
+    "validation": [
+      {
+        "criterion": "AC-01",
+        "commands": [
+          "python -m pytest -q tests/test_policy.py tests/test_protocols.py"
+        ],
+        "evidence": "Ten existing API tests pass with current requirements and with the proposed combined dependency updates."
+      },
+      {
+        "criterion": "AC-02",
+        "commands": [
+          "bash project/governance-check.sh --base origin/main --head HEAD"
+        ],
+        "evidence": "Managed scope, immutable adoption, hooks and canonical worktree checks pass."
+      }
+    ]
+  }
+}
