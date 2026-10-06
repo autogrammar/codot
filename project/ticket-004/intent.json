@@ -1,0 +1,81 @@
+{
+  "schema": "new-project.intent/v3",
+  "ticket": "ticket-004",
+  "summary": "Verify and consolidate 3 pending API dependency upgrades",
+  "workstream": "interfaces",
+  "classification": {
+    "kind": "BUG",
+    "priority": "P1",
+    "origin": "requested"
+  },
+  "allowedPaths": [
+    "api/requirements.txt"
+  ],
+  "forbiddenPaths": [
+    "project/ticket-*/user-*.md"
+  ],
+  "stacks": [],
+  "dependsOn": [],
+  "conflictsWith": [],
+  "integrationTicket": null,
+  "delivery": {
+    "acceptedBaseSha": "963b706b69341192968d0039066ea78eb14e7a76",
+    "targetBranch": "main",
+    "outcome": "Publish the verified uvicorn 0.53.0, PyJWT 2.15.0 and jsonschema 4.26.0 updates requested by Codot PRs 12, 13 and 14.",
+    "nonGoals": [
+      "Add dependencies or change application behavior",
+      "Change workflow, publication actors or required checks",
+      "Discard unmerged bot history"
+    ],
+    "complexity": "L",
+    "estimatedMinutes": 30,
+    "budgets": {
+      "maxImplementationFiles": 1,
+      "maxAffectedComponents": 1,
+      "maxPublicInterfaceChanges": 1,
+      "maxRuntimeDependencies": 3
+    },
+    "architecture": {
+      "status": "accepted",
+      "decision": "Consolidate three existing dependency version pins under one native interfaces ticket; retain hosted API and governance gates and validate actual JWT/schema/ASGI bindings locally on both Python versions.",
+      "components": [
+        {
+          "name": "api",
+          "paths": [
+            "api/requirements.txt"
+          ]
+        }
+      ],
+      "responsibilityChanges": false,
+      "interfaceChanges": [],
+      "dataChanges": [],
+      "ui": {
+        "impact": "none",
+        "states": [],
+        "evidence": []
+      },
+      "rollback": "Revert the three version pins to the accepted base versions."
+    },
+    "runtimeDependencies": [
+      "uvicorn[standard]==0.53.0",
+      "PyJWT==2.15.0",
+      "jsonschema==4.26.0"
+    ],
+    "validation": [
+      {
+        "criterion": "AC-01",
+        "commands": [
+          "python -m pytest -q -p no:cacheprovider tests/test_policy.py tests/test_protocols.py"
+        ],
+        "evidence": "All ten existing API tests pass on Python 3.10 and 3.12 with the combined updates; actual JWT valid/expired/wrong-signature, inline schema valid/invalid and uvicorn ASGI loading smoke checks pass."
+      },
+      {
+        "criterion": "AC-02",
+        "commands": [
+          "bash project/governance-check.sh"
+        ],
+        "evidence": "Native governance, both hosted API matrix checks and both hosted governance checks pass before independent exact-head protected publication."
+      }
+    ]
+  }
+}
