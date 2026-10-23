@@ -1,0 +1,73 @@
+{
+  "schema": "new-project.intent/v3",
+  "ticket": "ticket-623",
+  "summary": "Dependency maintenance: api pyjwt requirement",
+  "workstream": "interfaces",
+  "classification": {
+    "kind": "SERVICE",
+    "priority": "P2",
+    "origin": "health"
+  },
+  "allowedPaths": [
+    "project/ticket-623/**",
+    "TODO.md",
+    "project/TICKETS.md",
+    "api/requirements.txt"
+  ],
+  "forbiddenPaths": [
+    "project/ticket-*/user-*.md"
+  ],
+  "stacks": [],
+  "dependsOn": [],
+  "conflictsWith": [],
+  "integrationTicket": null,
+  "delivery": {
+    "acceptedBaseSha": "1e18d9dc56f419bbcea26b2fe71a9220e3207819",
+    "targetBranch": "main",
+    "outcome": "Automated api dependency updates carried through the interfaces workstream.",
+    "nonGoals": [
+      "runtime code changes"
+    ],
+    "complexity": "L",
+    "estimatedMinutes": 60,
+    "budgets": {
+      "maxImplementationFiles": 15,
+      "maxAffectedComponents": 5,
+      "maxPublicInterfaceChanges": 3,
+      "maxRuntimeDependencies": 3
+    },
+    "architecture": {
+      "status": "accepted",
+      "decision": "No architecture change; requirement pin refresh only.",
+      "components": [
+        {
+          "name": "api",
+          "paths": [
+            "api/**"
+          ]
+        }
+      ],
+      "responsibilityChanges": false,
+      "interfaceChanges": [],
+      "dataChanges": [],
+      "ui": {
+        "impact": "none",
+        "states": [],
+        "evidence": []
+      },
+      "rollback": "git revert the bump commit"
+    },
+    "runtimeDependencies": [
+      "pyjwt"
+    ],
+    "validation": [
+      {
+        "criterion": "AC-01",
+        "commands": [
+          "project/governance-check.sh"
+        ],
+        "evidence": "governance gate GOV-PASS on the PR diff"
+      }
+    ]
+  }
+}
