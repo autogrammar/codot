@@ -11,4 +11,5 @@
 | **ticket-622** | [`README.md`](./ticket-622/README.md) | - | - | - | - | - |
 | **ticket-623** | [`README.md`](./ticket-623/README.md) | - | - | - | - | - |
 | **ticket-624** | [`README.md`](./ticket-624/README.md) | - | - | - | - | - |
+| **ticket-625** | [`README.md`](./ticket-625/README.md) | - | - | - | - | - |
 <!-- AUTO:TICKET_INDEX:END -->
